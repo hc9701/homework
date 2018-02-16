@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 实例 - 表单控件状态</title>
+    <link rel="stylesheet" href="../../../../../static/css/lib/bootstrap.min.css">
+    <script src="../../../../../static/js/lib/jquery-2.1.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <style>
+        .form-group{
+            width: 300px;
+        }
+        #form{
+            margin-top: 100px;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+<form role="form" id="form">
+    <div class="form-group" id="name1" >
+        <label for="name">用&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp户:</label>
+        <input type="text" class="form-control" id="name" placeholder="请输入名称">
+    </div>
+    <div class="form-group" id="passwd">
+        <label for="name">密&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp码:</label>
+        <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码">
+    </div>
+    <div class="form-group" id="passwd1">
+        <label for="name">确认密码：</label>
+        <input type="password" class="form-control" id="inputPassword1" placeholder="请再次输入密码">
+    </div>
+    <div class="form-group" id="email">
+        <label for="name">修改邮箱：</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="请输入邮箱">
+    </div>
+    <input class="btn btn-default" type="submit" value="修改">&nbsp&nbsp<input type="reset"value="重置" class="btn btn-default" >
+</form>
+</body>
+</html>

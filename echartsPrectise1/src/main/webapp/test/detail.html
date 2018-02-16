@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            font-size:75%;
+            background:#abc;
+        }
+        ol,ul{
+            list-style:none;
+        }
+        *{
+            margin:0;
+            padding:0;
+        }
+        /*--------------------------------------------------------------------
+            Comments Section
+          --------------------------------------------------------------------*/
+        div#comments{
+            width:50em;
+            clear:both;
+            margin:2em;
+            background:#EDEDED;
+            border:1px solid #ddd;
+            padding:1em;
+        }
+
+        /*--------------------------------------------------------------------
+            Comment Trees Layout
+          --------------------------------------------------------------------*/
+
+        ul#comment_tree{
+            margin:2.5em 0 1.5em 0;
+        }
+        ul#comment_tree li{
+            margin-bottom:3em;    /*设成和ul.replies的话会比较难识别，亲和力？*/
+        }
+        /*--------------------------------------------------------------------
+            Member Picture Layout
+          --------------------------------------------------------------------*/
+        ul#comment_tree div.member{
+            width:85px;
+            max-width:85px;
+            float:left;
+            background:#EDEDED;
+            display:block;
+            padding-right:35px;    /*为箭头图片留空*/
+            z-index:1000;
+        }
+
+        ul#comment_tree div.member img.user_photo{
+            display:block;
+        }
+
+        /*--------------------------------------------------------------------
+            Comments Box Layout
+          --------------------------------------------------------------------*/
+        ul#comment_tree div.comment{
+            width:448px; /*或者auto?*/
+            background:#fff;
+            float:left;
+            position:relative;
+            padding:1.0em 15px;
+
+            border: 1px solid #ddd;
+        }
+
+        ul#comment_tree h6.comment_date{
+            position:absolute;
+            left:-32px;
+            line-height:32px;
+            height:32px;
+            color:#ccc;
+            background:url(image/comment_arrow_bg.png) no-repeat left top;
+            padding-left:4em;
+            font-size:smaller;
+            font-weight:normal;
+        }
+
+        /*--------------------------------------------------------------------
+            Comments Content Copy Layout
+          --------------------------------------------------------------------*/
+        div.comment div.comment_content {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+            margin-top: 6em;
+            z-index:999;
+        }
+        /*--------------------------------------------------------------------
+            Reply Comment Layout
+          --------------------------------------------------------------------*/
+        ul#comment_tree  li  ul.replies{
+            border-left:1px solid #ddd;
+            margin-left:120px;
+            padding-top:1em;
+        }
+
+        ul#comment_tree  li  ul.replies * ul.replies{ /*:KLUDGE: "*"指的是将所有ul.replies下的ul.replies,
+这种方法替代了子选择器方法，从而可令IE6以下版本也可支持*/
+            margin-left:24px;
+            border-left:1px solid #ddd;
+            padding-top:1em;
+        }
+
+        ul#comment_tree li.reply{
+            background:url(image/comment_li_bg.gif) no-repeat left 2.5em;
+            padding-left:24px;
+        }
+
+        ul#comment_tree li.reply div.comment_wrapper{ /*comment外套，下一级是.member和.comment*/
+            position:relative;
+        }
+
+        ul#comment_tree li.reply div.member{ /*继承了第一个.member中的z-index，其作用是把用户头像置于
+comment上方*/
+            position:absolute;
+            left:1.25em;
+            width:45px;
+            top:1.25em;
+            padding-right:0;
+        }
+
+        ul#comment_tree li.reply div.member img.user_photo{
+            width:45px;
+            height:45px;
+        }
+
+        ul#comment_tree li ul.replies h6.comment_date{
+            background:none;
+            left:70px;
+            top:32px;
+            padding-left:0;
+        }
+        ul#comment_tree li ul.replies li div.comment{
+            width:auto;
+            max-width:445px;
+            float:none;
+            padding-top:4em;
+        }
+        /*--------------------------------------------------------------------
+            Clean Floating Tag
+          --------------------------------------------------------------------*/
+        .clearfix:after{
+            content:".";
+            clear:both;
+            height:0;
+            display:block;
+            visibility:hidden;
+        }
+
+        .clearfix{
+            display:inline-block;    /*fix IE-Mac*/
+        }
+
+        /* Hides from IE-Mac\*/
+        * html .clearfix{ height:1%;} /*fix IE6*/
+        .clearfix{ display:block;}    /*reset display on IE*/
+        /*End hides from IE-Mac */
+    </style>
+</head>
+<body>
+<div id="comments" class="clearfix">
+    <!-- comment tree-->
+    <ul id="comment_tree" >
+        <li>
+            <!-- comment_wrapper-->
+            <div class="comment_wrapper clearfix"  >
+                <div class="member">
+                    <h5 class="display_name">Tiger</h5>
+                    <img src="image/member_1.jpg"  alt="Tiger"/>
+                </div>
+                <div class="comment">
+
+                    <h6 class="comment_date">Jun.5th.2009 1:02 am.</h6>
+                    <!-- comment_content-->
+                    <div class="comment_content">
+                        <p>Here is some testing content!      </p>
+                    </div>
+                    <!-- /comment_content-->
+                </div>
+            </div>
+            <!-- /comment_wrapper-->
+
+            <!-- replies-->
+            <ul class="replies">
+                <li class="reply deep-1">
+                    <!-- comment_wrapper-->
+                    <div class="comment_wrapper clearfix">
+                        <div class="member">
+                            <h5 class="display_name">Sun</h5>
+                            <img src="image/member_2.jpg" class="user_photo" alt="Oval" />
+                        </div>
+                        <div class="comment">
+
+                            <h6 class="comment_date">Jun.6th.2009 3:34 pm.</h6>
+                            <div class="comment_content">
+                                <p>Here is deep-1 reply content!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /comment_wrapper-->
+                    <ul class="replies">
+                        <li class="reply deep-2">
+                            <!-- comment_wrapper-->
+                            <div class="comment_wrapper clearfix">
+                                <div class="member">
+                                    <h5 class="display_name">S</h5>
+                                    <img src="image/member_3.jpg" class="user_photo" alt="Oval" />
+                                </div>
+                                <div class="comment">
+                                    <h6 class="comment_date">Jun.6th.2009 6:49 pm.</h6>
+                                    <div class="comment_content">
+                                        <p>Here is deep-2 reply content!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /comment_wrapper-->
+                            <ul class="replies">
+                                <li class="reply deep-3">
+                                    <!-- comment_wrapper-->
+                                    <div class="comment_wrapper clearfix">
+                                        <div class="member">
+                                            <h5 class="display_name">Oval</h5>
+                                            <img src="image/member_4.jpg" class="user_photo" alt="Oval" />
+                                        </div>
+                                        <div class="comment">
+                                            <h6 class="comment_date">Jun.6th.2009 6:49 pm.</h6>
+                                            <div class="comment_content">
+                                                <p>Here is deep-3 reply content!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /comment_wrapper-->
+                                    <ul class="replies">
+                                        <li class="reply deep-4">
+                                            <!-- comment_wrapper-->
+                                            <div class="comment_wrapper clearfix">
+                                                <div class="member">
+                                                    <h5 class="display_name">Skull</h5>
+                                                    <img src="image/member_5.jpg" class="user_photo" alt="Oval" />
+                                                </div>
+                                                <div class="comment">
+                                                    <h6 class="comment_date">Jun.6th.2009 6:49 pm.</h6>
+                                                    <div class="comment_content">
+                                                        <p>Here is deep-2 reply content!</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /comment_wrapper-->
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="reply deep-3">
+                                    <!-- comment_wrapper-->
+                                    <div class="comment_wrapper clearfix">
+                                        <div class="member">
+                                            <h5 class="display_name">Handsome</h5>
+                                            <img src="image/member_6.jpg" class="user_photo" alt="Oval" />
+                                        </div>
+                                        <div class="comment">
+                                            <h6 class="comment_date">Jun.6th.2009 6:49 pm.</h6>
+                                            <div class="comment_content">
+                                                <p>Here is deep-3 reply content!</p>
+                                                <img src="image/panda.jpg" alt="Panda" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /comment_wrapper-->
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /replies-->
+
+        </li>
+        <li>
+            <!-- comment_wrapper-->
+            <div class="comment_wrapper clearfix" >
+                <div class="member">
+                    <h5 class="display_name">Tiger</h5>
+                    <img src="image/member_1.jpg"  alt="Tiger"/>
+                </div>
+                <div class="comment">
+
+                    <h6 class="comment_date">Jun.5th.2009 1:02 am.</h6>
+                    <!-- comment_content-->
+                    <div class="comment_content">
+                        <p>Here is some testing content!      </p>
+                    </div> <!-- /comment_content-->
+                </div>
+            </div> <!-- /comment_wrapper-->
+        </li>
+    </ul> <!-- /comments tree-->
+</div>
+
+</body>
+</html>

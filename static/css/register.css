@@ -1,0 +1,134 @@
+@charset "utf-8";
+html {
+    text-align: left;
+    height: 100%;
+    width: 100%;
+}
+*{margin:0px auto;padding:0px;}
+body {
+    font-family:"microsoft yahei",Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    text-decoration: none;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    height: 100%;
+    width: 100%;
+    background:url(img/6.jpg) top repeat-y;
+    background-attachment:fixed;
+    webkit-background-size: cover;
+
+
+
+}
+div,form,img,ul,li,input,p,ul,ol,li,form{margin:0px;padding:0px;border:0px; list-style:none; }
+.clear{ clear:both;font-size:0; height:0; line-height:0;}
+
+/*#login_bj{
+	background:url(../img/loginbg.jpg) repeat-y;
+	background-attachment:fixed;
+	webkit-background-size: cover;
+}*/
+#title{
+    height: 100px;
+    margin-top: 80px;
+    text-align: center;
+}
+#login{
+    position: absolute;
+    width: 40%;
+    height: 400px;
+    left:30%;
+    top:30%;
+    /*bottom:300px*/
+    background: url(img/login_tou.png);
+}
+#login .logo{
+    height: 83px;
+    margin-top: 32px;
+    text-align: center;
+}
+#register{
+    position:absolute;
+    margin-top: 280px;
+    margin-left: -210px;
+}
+
+#login .login_box{
+    position: relative;
+    width: 480px;
+    height: 35px;
+    margin: 0px auto;
+    /*background: red;*/
+    /*clear: both;*/
+}
+#copyright{
+    position: absolute;
+    bottom:10px;
+    width: 100%;
+    color: #FFFFFF;
+    font-size: 14px;
+    text-align: center;
+}
+#login .login_box .admin{
+    float: left;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    background: url(img/icon_login_admin.jpg) no-repeat 10px center #FFFFFF;
+    padding-left: 35px;
+    margin-top: 60px;
+    margin-left: 70px;
+    /*border-radius: 5px;
+    behavior: url(css/ie-css3.htc);*/
+}
+#login .login_box .passWord{
+    float: left;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 15px;
+    background: url(img/icon_password.jpg) no-repeat 10px center #FFFFFF;
+
+    padding-left: 35px;
+    margin-top: 20px;
+    margin-left: 70px;
+    /*border-radius: 5px;
+    behavior: url(css/ie-css3.htc);*/
+}
+#login .login_box .passWord2{
+    float: left;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 15px;
+    background: url(img/icon_password.jpg) no-repeat 10px center #FFFFFF;
+    padding-left: 35px;
+    margin-top: 20px;
+    margin-left: 70px;
+    /*border-radius: 5px;
+    behavior: url(css/ie-css3.htc);*/
+}
+#login .login_box .email{
+    float: left;
+    width: 300px;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 15px;
+    background: url(img/email.png) no-repeat 10px center #FFFFFF ;
+    padding-left: 35px;
+    margin-top: 20px;
+    margin-left: 70px;
+}
+#login .login_box .submit{
+    background-color: deepskyblue;
+    font-size: 16px;
+    width: 100px;
+    height: 50px;
+    margin-top: 60px;
+    margin-left:185px;
+    outline: none;
+    cursor: pointer;
+    float: left;
+}

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APP下载量</title>
+    <link href="../css1/download.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css1/sou/font-awesome.min.css">
+    <link rel="stylesheet" href="../css1/sou/style.css">
+    <script src="../../../../../static/js/lib/echarts.min.js"></script>
+    <script src="../../../../../static/js/lib/china.js" charset ="utf-8"></script>
+</head>
+<body>
+<div class="container">
+        <ul id="nav">
+            <li ><a href="home.html">首页</a></li>
+            <li><a href="APPdownload.html">APP下载量</a></li>
+            <li><a href="Details.html">APP评论详情</a></li>
+            <li><a href="score.html">APP评分统计</a></li>
+            <li><a href="usercenter.html">用户中心</a></li>
+        </ul>
+    <div class="search d7">
+        <form>
+            <input type="text" placeholder="搜索从这里开始...">
+            <button type="submit"></button>
+        </form>
+    </div>
+<div id="mouthload" style="width: 600px;height:400px;"></div>
+<div id="weekload" style="width: 600px;height:400px;"></div>
+<div id="yearload" style="width: 600px;height:400px;"></div>
+<div id="distribute" style="width: 600px;height:400px;"></div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById("mouthload"));
+    var option = {
+
+        title : {
+            text: 'APP月下载量',
+            subtext: '纯属虚构'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['爱奇艺','优酷']
+        },
+        //右上角工具条
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel : {
+                    formatter: '{value} K'
+                }
+            }
+        ],
+        series : [
+            {
+                name:'爱奇艺',
+                type:'line',
+                data:[300, 400, 452, 430, 700, 500, 600,700,600.800,888,901],
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    // 为echarts对象加载数据
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById("weekload"));
+    var option = {
+        title : {
+            text: 'APP周下载量',
+            subtext: '纯属虚构'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['爱奇艺','优酷']
+        },
+        //右上角工具条
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : ['周日','周一','周二','周三','周四','周五','周六']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel : {
+                    formatter: '{value} K'
+                }
+            }
+        ],
+        series : [
+            {
+                name:'爱奇艺',
+                type:'line',
+                data:[30, 43, 70,60,80,28,51],
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    // 为echarts对象加载数据
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById("yearload"));
+    var option = {
+        title : {
+            text: 'APP年下载量',
+            subtext: '纯属虚构'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['爱奇艺','优酷']
+        },
+        //右上角工具条
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : ['2010','2011','2012','2013','2014','2015','2016']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel : {
+                    formatter: '{value} K'
+                }
+            }
+        ],
+        series : [
+            {
+                name:'爱奇艺',
+                type:'line',
+                data:[3000, 4300, 7000,6000,8000,2800,5100],
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    // 为echarts对象加载数据
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById("distribute"));
+    function randomData() {
+        return Math.round(Math.random()*1000);
+    }
+    option = {
+        title: {
+            text: 'APP下载分布图',
+            subtext: '纯属虚构',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data:['爱奇艺','土豆网','优酷']
+        },
+        visualMap: {
+            min: 0,
+            max: 2500,
+            left: 'left',
+            top: 'bottom',
+            text: ['高','低'],           // 文本，默认为数值文本
+            calculable: true
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        series: [
+            {
+                name: '爱奇艺',
+                type: 'map',
+                mapType: 'china',
+                roam: false,
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '重庆',value: randomData() },
+                    {name: '河北',value: randomData() },
+                    {name: '河南',value: randomData() },
+                    {name: '云南',value: randomData() },
+                    {name: '辽宁',value: randomData() },
+                    {name: '黑龙江',value: randomData() },
+                    {name: '湖南',value: randomData() },
+                    {name: '安徽',value: randomData() },
+                    {name: '山东',value: randomData() },
+                    {name: '新疆',value: randomData() },
+                    {name: '江苏',value: randomData() },
+                    {name: '浙江',value: randomData() },
+                    {name: '江西',value: randomData() },
+                    {name: '湖北',value: randomData() },
+                    {name: '广西',value: randomData() },
+                    {name: '甘肃',value: randomData() },
+                    {name: '山西',value: randomData() },
+                    {name: '内蒙古',value: randomData() },
+                    {name: '陕西',value: randomData() },
+                    {name: '吉林',value: randomData() },
+                    {name: '福建',value: randomData() },
+                    {name: '贵州',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '青海',value: randomData() },
+                    {name: '西藏',value: randomData() },
+                    {name: '四川',value: randomData() },
+                    {name: '宁夏',value: randomData() },
+                    {name: '海南',value: randomData() },
+                    {name: '台湾',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            },
+            {
+                name: '土豆网',
+                type: 'map',
+                mapType: 'china',
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '重庆',value: randomData() },
+                    {name: '河北',value: randomData() },
+                    {name: '安徽',value: randomData() },
+                    {name: '新疆',value: randomData() },
+                    {name: '浙江',value: randomData() },
+                    {name: '江西',value: randomData() },
+                    {name: '山西',value: randomData() },
+                    {name: '内蒙古',value: randomData() },
+                    {name: '吉林',value: randomData() },
+                    {name: '福建',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '西藏',value: randomData() },
+                    {name: '四川',value: randomData() },
+                    {name: '宁夏',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            },
+            {
+                name: '优酷',
+                type: 'map',
+                mapType: 'china',
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '台湾',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            }
+        ]
+    };
+    myChart.setOption(option);
+</script>
+</body>
+</html>

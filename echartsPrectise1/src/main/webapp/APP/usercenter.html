@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" href="../css1/user.css">
+</head>
+<body>
+<div class="container">
+    <ul id="nav">
+        <li ><a href="home.html">首页</a></li>
+        <li><a href="APPdownload.html">APP下载量</a></li>
+        <li><a href="Details.html">APP评论详情</a></li>
+        <li><a href="score.html">APP评分统计</a></li>
+        <li><a href="usercenter.html">用户中心</a></li>
+    </ul>
+<img src="../css1/img/face.jpeg" height="120" width="120" id="v">
+    <br><button id="button1" style="color: #2aabd2">编辑头像</button>
+<div id="login">
+    <div class="login_box">
+     <div>
+         <h1 style="color: azure " id="person1">基本信息：</h1>
+         <form action="userClServlet?flag=addUser" method="post">
+                 <p style="color: white" class="p1">用&nbsp&nbsp户:<input  class="user" type="text" name="userName"/></p>
+             <p style="color: white" class="p1">密&nbsp&nbsp码:<input class="user" type="password" name="passwd"/></p>
+             <p style="color: white" class="p1">确认密码:<input class="user" type="password" name="passwd1"/></p>
+             <p style="color: white" class="p1">修改邮箱:<input class="user" type="text" name="grade"/></p>
+                 <input id="xiu1"type="submit"value="修改" class="sub" style="color: #5bc0de ">&nbsp&nbsp<input type="reset"value="重置"class="sub" style="color: #5bc0de ">
+         </form>
+     </div>
+        <div>
+            <h1 style="color: azure " id="person2">个人设置：</h1>
+            <form action="userClServlet?flag=addUser" method="post">
+                <p style="color: white" class="p1">你感兴趣的APP分类1:<input  class="user" type="text" name="userName"/></p>
+                <p style="color: white" class="p1">你感兴趣的APP分类2:<input  class="user" type="text" name="userName"/></p>
+                <p style="color: white" class="p1">你想要关注的APP1:&nbsp<input class="user" type="password" name="passwd"/></p>
+                <p style="color: white" class="p1">你想要关注的APP2:&nbsp<input class="user" type="password" name="passwd"/></p>
+                <p style="color: white" class="p1">你想要关注的分词一:<input class="user" type="password" name="passwd1"/></p>
+                <p style="color: white" class="p1">你想要关注的分词二:<input class="user" type="text" name="grade"/></p>
+                <input id="xiu2"type="submit"value="设置" class="sub" style="color: #5bc0de ">&nbsp&nbsp<input type="reset"value="重置"class="sub" style="color: #5bc0de ">
+            </form>
+        </div>
+
+    </div>
+    <br>
+</div>
+</div>
+</body>
+</html>
