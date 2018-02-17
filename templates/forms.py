@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField
+from wtforms.fields import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired, AnyOf
 
 
@@ -15,16 +15,13 @@ class LoginForm(FlaskForm):
         ],
     )
     identity = SelectField(
-        choices=[
-            (0, '普通用户'),
-            (1, '管理员'),
-        ],
-        coerce=int,
+        '', choices=[(0, '普通用户'), (1, '管理员')],
         validators=[
             AnyOf([0, 1], message='请以合法身份登录')
         ],
         render_kw={
             'data-select-like-alignement': 'never'
-        }
-    ),
+        },
+        coerce=int,
+    )
     submit = SubmitField('')
