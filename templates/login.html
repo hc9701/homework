@@ -10,9 +10,10 @@
     用户登录
 {% endblock %}
 {% block body %}
+    {{ super() }}
     <h1 style="font-size: 50px ;color: aliceblue" id="title">APP评论数据分析系统</h1>
     <div id="login">
-        <form>
+        <form method="post">
             <div class="logo" style="font-size:15px;color: #FFFFFF">
                 <h1 style="font-size: 40px">&nbsp;&nbsp;&nbsp;登录</h1>
                 <div class="scroll-parent">

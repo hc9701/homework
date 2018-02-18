@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>用户注册</title>
-    <link rel="stylesheet" href="../css1/register.css" />
-    <script>
-        function setContentHeight (){
-            var web_subnav = document.getElementById( "login_bj" );
-            web_subnav.style.height = document.documentElement.clientHeight + 'px';
-        }
-        window.onload = setContentHeight;
-        window.onresize = setContentHeight;
-    </script>
-</head>
-<body>
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/register.css') }}"/>
+{% endblock %}
+{% block title %}
+    用户注册
+{% endblock %}
+{% block body %}
 <h1 style="font-size: 50px ;color: aliceblue" id="title">可靠的数据从注册开始</h1>
 <div id="login">
-    <!--<DIV class="logo" style="font-size:15px;color: #FFFFFF">-->
-    <!--</DIV>-->
     <div class="login_box">
-        <input class="admin" type="text" placeholder="用户名" />
-        <input class="email" type="text" placeholder="邮箱" />
-        <input class="passWord" type="password" placeholder="密码"  />
-        <input class="passWord2" type="text" placeholder="密码确认" />
+        <input class="admin" type="text" placeholder="用户名"/>
+        <input class="email" type="text" placeholder="邮箱"/>
+        <input class="passWord" type="password" placeholder="密码"/>
+        <input class="passWord2" type="text" placeholder="密码确认"/>
         <a id="register" href="login.html" style="font-size:17px ;color: deepskyblue">已有账号？</a>
         <input class="submit" type="button" value="立即注册" style="color: #FFFFFF"/>
     </div>
     <br>
 </div>
 <div id="copyright">版权所有：浙师大</div>
-</body>
-</html>
+{% endblock %}

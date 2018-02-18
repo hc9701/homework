@@ -7,8 +7,12 @@
     {% endblock %}
 </head>
 <body>
-    {% block body %}
-
-    {% endblock %}
+{% block body %}
+    <script>
+        {% for message in get_flashed_messages() %}
+            alert('{{ message }}')
+        {% endfor%}
+    </script>
+{% endblock %}
 </body>
 </html>
