@@ -1,3 +1,4 @@
+{% extends 'base_template/base.html' %}
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/register.css') }}"/>
@@ -6,17 +7,24 @@
     用户注册
 {% endblock %}
 {% block body %}
-<h1 style="font-size: 50px ;color: aliceblue" id="title">可靠的数据从注册开始</h1>
-<div id="login">
-    <div class="login_box">
-        <input class="admin" type="text" placeholder="用户名"/>
-        <input class="email" type="text" placeholder="邮箱"/>
-        <input class="passWord" type="password" placeholder="密码"/>
-        <input class="passWord2" type="text" placeholder="密码确认"/>
-        <a id="register" href="login.html" style="font-size:17px ;color: deepskyblue">已有账号？</a>
-        <input class="submit" type="button" value="立即注册" style="color: #FFFFFF"/>
+    {{ super() }}
+    <h1 style="font-size: 50px ;color: aliceblue" id="title">可靠的数据从注册开始</h1>
+    <div id="login">
+        <div class="login_box">
+            <form method="post">
+                <form action="" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.username(class='admin') }}
+                    {{ form.email(class='email') }}
+                    {{ form.password(class='password') }}
+                    {{ form.confirm(class='confirm') }}
+                    {{ form.submit(class='submit') }}
+
+                </form>
+            </form>
+            <a id="register" href="{{ url_for('login') }}" style="font-size:17px ;color: deepskyblue">已有账号？</a>
+        </div>
+        <br>
     </div>
-    <br>
-</div>
-<div id="copyright">版权所有：浙师大</div>
+    <div id="copyright">版权所有：浙师大</div>
 {% endblock %}

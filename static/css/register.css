@@ -83,7 +83,7 @@ div,form,img,ul,li,input,p,ul,ol,li,form{margin:0px;padding:0px;border:0px; list
     /*border-radius: 5px;
     behavior: url(css/ie-css3.htc);*/
 }
-#login .login_box .passWord{
+#login .login_box .password{
     float: left;
     width: 300px;
     height: 35px;
@@ -97,7 +97,7 @@ div,form,img,ul,li,input,p,ul,ol,li,form{margin:0px;padding:0px;border:0px; list
     /*border-radius: 5px;
     behavior: url(css/ie-css3.htc);*/
 }
-#login .login_box .passWord2{
+#login .login_box .confirm{
     float: left;
     width: 300px;
     height: 35px;
@@ -131,4 +131,5 @@ div,form,img,ul,li,input,p,ul,ol,li,form{margin:0px;padding:0px;border:0px; list
     outline: none;
     cursor: pointer;
     float: left;
+    color: #FFFFFF;
 }

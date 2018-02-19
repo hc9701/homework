@@ -27,7 +27,7 @@ class MongoConn(object):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'h@rd t0 gu3Ss Str1n9'
 csrf = CSRFProtect(app)
-db = MongoConn()
+db = MongoConn().db
 
 
 
