@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for, flash, session
 from flask_wtf.csrf import CSRFError
 
 from shuju import app, db
-from templates.forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm
 
 POST = 'POST'
 
