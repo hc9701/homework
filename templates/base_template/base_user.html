@@ -1,0 +1,22 @@
+{% extends 'base_template/base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/sou/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/sou/style.css') }}">
+{% endblock %}
+{% block body %}
+    {{ super() }}
+    <div class="container">
+        <ul id="nav">
+            <li ><a href="{{ url_for('home') }}">首页</a></li>
+            <li><a href="{{ url_for('download') }}">APP下载量</a></li>
+            <li><a href="{{ url_for('detail') }}">APP评论详情</a></li>
+            <li><a href="{{ url_for('score') }}">APP评分统计</a></li>
+            <li><a href="{{ url_for('user_center') }}">用户中心</a></li>
+            <li><a href="#"> 退出登录</a></li>
+        </ul>
+        {% block content %}
+
+        {% endblock %}
+    </div>
+{% endblock %}
