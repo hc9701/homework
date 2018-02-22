@@ -2,6 +2,7 @@ from lxml import html
 
 import requests
 import time
+import datetime
 
 from shuju import db
 
@@ -21,22 +22,18 @@ class SpiderHuaWei(SpiderAbstract):
             app_id)
         self.url_data = 'http://a.vmall.com/uowap/index?method=internal.user.commenList3&serviceType=13&reqPageNum=1&maxResults=%d&appid=%s' % (
             max_result, app_id)
-        self.rating = {}
+        self.store_name = '华为应用市场'
+        self.rating = {'type': 5, 'ratings': [0 for x in range(5)],'store_name':self.store_name,'app_name':''}
         self.comments = []
         self.app_name = ''
-        self.store_name = '华为应用市场'
 
     def parse(self):
         json1 = requests.get(self.url_title).json()
         self.app_name = json1['layoutData'][0]['dataList'][0]['name']
         self.rating['app_name'] = self.app_name
-        self.rating['store_name'] = self.store_name
-        self.rating['type'] = 5
         json2 = requests.get(self.url_data).json()
-        ratings = {}
         for rating in json2['ratingDstList']:
-            ratings['%s' % rating['rating']] = rating['ratingCounts']
-        self.rating['ratings'] = ratings
+            self.rating['ratings'][int(rating['rating'])-1] = rating['ratingCounts']
         for comment in json2['list']:
             self.comments.append({
                 'time': time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(comment['operTime'], '%Y/%m/%d %H:%M')),
@@ -64,7 +61,7 @@ class Spider360(SpiderAbstract):
         self.url_rating = 'http://comment.mobilem.360.cn//comment/getLevelCount?baike=%s'
         self.store_name = '360应用市场'
         self.app_name = ''
-        self.rating = {'type': 3, 'store_name': self.store_name}
+        self.rating = {'type': 3, 'store_name': self.store_name,'ratings':[0 for x in range(3)]}
         self.comments = []
 
     def parse(self):
@@ -83,9 +80,9 @@ class Spider360(SpiderAbstract):
                 'time': comment['create_time'],
             })
         f2 = requests.get(self.url_rating % baike_name).json()
-        self.rating['好评'] = f2['best']
-        self.rating['中评'] = f2['good']
-        self.rating['差评'] = f2['bad']
+        self.rating['ratings'][0] = int(f2['bad'])
+        self.rating['ratings'][1] = int(f2['good'])
+        self.rating['ratings'][2] = int(f2['best'])
 
     def store(self):
         db.ratings.update_one({
@@ -116,13 +113,13 @@ class SpiderKuChuan():
         data = f['series'][0]['data']
         for when, value in zip(categories, data):
             self.score.append({
-                "time": time.strptime(when, '%Y-%m-%d'),
+                "time":datetime.datetime(),
                 "value": value["y"],
                 "app_name": self.app_name,
             })
 
     def store(self):
-        db.scores.insert_many(self.score)
+        db.downloads.insert_many(self.score)
 
 
 if __name__ == '__main__':
@@ -130,10 +127,10 @@ if __name__ == '__main__':
     # spider = SpiderHuaWei('http://a.vmall.com/uowap/index.html#/detailApp/C10111119')
     # spider = Spider360('http://zhushou.360.cn/detail/index/soft_id/7953?recrefer=SE_D_qq')
     # spider = Spider360('http://zhushou.360.cn/detail/index/soft_id/902591')
-    # spider = SpiderKuChuan(
-    #     'http://android.kuchuan.com/page/detail/download?package=com.tencent.mobileqq&infomarketid=1&site=0#!/day/com.tencent.mobileqq')
     spider = SpiderKuChuan(
-        'http://android.kuchuan.com/page/detail/download?package=com.tencent.qqlite&infomarketid=1&site=0#!/day/com.tencent.qqlite')
+        'http://android.kuchuan.com/page/detail/download?package=com.tencent.mobileqq&infomarketid=1&site=0#!/day/com.tencent.mobileqq')
+    # spider = SpiderKuChuan(
+    #     'http://android.kuchuan.com/page/detail/download?package=com.tencent.qqlite&infomarketid=1&site=0#!/day/com.tencent.qqlite')
     spider.parse()
     spider.store()
     # pymongo.errors.BulkWriteError: batch op errors occurred
