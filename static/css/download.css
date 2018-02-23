@@ -48,3 +48,17 @@ ul#nav li a:hover{background:#0095BB}
     
 }
 
+.chart{
+    width: 800px;
+    height: 400px;
+    position: static;
+    display: inline-block;
+}
+
+.clear {
+    clear: both;
+    height: 80px;
+    width: 100%;
+    overflow: hidden;
+    margin-top: -1px
+}

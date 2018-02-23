@@ -3,20 +3,37 @@
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/sou/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/sou/style.css') }}">
+    <script src="{{ url_for('static',filename='js/lib/jquery-2.1.1.min.js') }}"></script>
 {% endblock %}
 {% block body %}
     {{ super() }}
     <div class="container">
         <ul id="nav">
-            <li ><a href="{{ url_for('home') }}">首页</a></li>
+            <li><a href="{{ url_for('home') }}">首页</a></li>
             <li><a href="{{ url_for('download') }}">APP下载量</a></li>
-            <li><a href="{{ url_for('detail') }}">APP评论详情</a></li>
+            <li><a href="{{ url_for('detail',app_name='none',page=1) }}">APP评论详情</a></li>
             <li><a href="{{ url_for('score') }}">APP评分统计</a></li>
             <li><a href="{{ url_for('user_center') }}">用户中心</a></li>
-            <li><a href="#"> 退出登录</a></li>
+            <li><a onclick="logout()"> 退出登录</a></li>
         </ul>
         {% block content %}
+            <script>
+                function logout() {
+                    b = confirm('退出登录');
+                    if (b) {
+                        $.ajax({
+                            url: '{{ url_for('logout') }}',
+                            success: function (data) {
+                                location.href = '/login'
+                            }
+                        })
+                    }
+                }
 
+            </script>
         {% endblock %}
     </div>
+    <script>
+
+    </script>
 {% endblock %}

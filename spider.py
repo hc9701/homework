@@ -113,7 +113,7 @@ class SpiderKuChuan():
         data = f['series'][0]['data']
         for when, value in zip(categories, data):
             self.score.append({
-                "time":datetime.datetime(),
+                "time":datetime.datetime.strptime(when, "%Y-%m-%d"),
                 "value": value["y"],
                 "app_name": self.app_name,
             })

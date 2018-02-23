@@ -1,20 +1,32 @@
 function create_echart(id, data) {
-
+    try {
+        if (id.search('day') > -1) {
+            create_day(id, data)
+        } else {
+            create_month(id, data)
+        }
+    } catch (e) {
+        if (id.search('1') > -1 || id.search('2') > -1) {
+            id.innerHTML = '还没有对应的数据，赶紧挑一个app关注吧'
+        } else {
+            id.innerHTML = '还没有对应的数据，试试搜索一下app吧'
+        }
+    }
 }
 
 function create_day(id, data) {
-    
-    var myChart = echarts.init(document.getElementById(id));
+    if (data['daily_data'].length === 0) {
+        throw new Error('找不到对应的app');
+    }
     var option = {
         title: {
-            text: '日下载量',
-            subtext: '纯属虚构'
+            text: data['app_name'] + '日下载量',
         },
         tooltip: {
             trigger: 'axis'
         },
         legend: {
-            data: ['爱奇艺', '优酷']
+            data: [data['app_name']]
         },
         //右上角工具条
         toolbox: {
@@ -32,7 +44,7 @@ function create_day(id, data) {
             {
                 type: 'category',
                 boundaryGap: false,
-                data: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+                data: data['daily_data'][0]
             }
         ],
         yAxis: [
@@ -47,7 +59,7 @@ function create_day(id, data) {
             {
                 name: '爱奇艺',
                 type: 'line',
-                data: [30, 43, 70, 60, 80, 28, 51],
+                data: data['daily_data'][1],
                 markPoint: {
                     data: [
                         {type: 'max', name: '最大值'},
@@ -63,21 +75,24 @@ function create_day(id, data) {
         ]
     };
     // 为echarts对象加载数据
+    var myChart = echarts.init(document.getElementById(id));
     myChart.setOption(option);
 }
 
 function create_month(id, data) {
-    var myChart = echarts.init(document.getElementById("mouthload"));
+    if (data['monthly_data'].length === 0) {
+        throw new Error('找不到对应的app')
+    }
     var option = {
 
         title: {
-            text: 'APP月下载量',
+            text: data['app_name'] + '月下载量',
         },
         tooltip: {
             trigger: 'axis'
         },
         legend: {
-            data: ['爱奇艺', '优酷']
+            data: [data['app_name']]
         },
         //右上角工具条
         toolbox: {
@@ -96,7 +111,7 @@ function create_month(id, data) {
             {
                 type: 'category',
                 boundaryGap: false,
-                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                data: data['monthly_data'][0]
             }
         ],
         yAxis: [
@@ -111,7 +126,7 @@ function create_month(id, data) {
             {
                 name: '爱奇艺',
                 type: 'line',
-                data: [300, 400, 452, 430, 700, 500, 600, 700, 600.800, 888, 901],
+                data: data['monthly_data'][1],
                 markPoint: {
                     data: [
                         {type: 'max', name: '最大值'},
@@ -127,6 +142,23 @@ function create_month(id, data) {
         ]
     };
     // 为echarts对象加载数据
+    var myChart = echarts.init(document.getElementById(id));
     myChart.setOption(option);
 }
 
+function search_app() {
+    var app_name = $('#app_name').val();
+    if (app_name === "" || app_name.trim() === "") {
+        alert('app名字不能为空');
+        return;
+    }
+    $.ajax({
+        url: '/user/download/search/' + app_name,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            create_echart('day_search', data);
+            create_echart('month_search', data);
+        }
+    })
+}
