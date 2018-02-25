@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/lib/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <script>
+        {% for message in get_flashed_messages() %}
+            alert('{{ message }}');
+        {% endfor%}
+    </script>
+    <div class="container">
+        <div class="row" id="title">
+            <h1>APP评论数据分析系统</h1>
+            <h3><strong>管理员界面</strong></h3>
+        </div>
+    </div>
+    <div class="container" id="main">
+        <div class="col-lg-2" id="nav">
+            <ul class="nav">
+                <li>用户管理</li>
+                <li class="nav-divider"></li>
+                <li><a href="{{ url_for('show_users',page=1) }}">用户一览</a></li>
+                <li><a href="{{ url_for('add_user') }}">添加用户</a></li>
+                <li class="nav-divider"></li>
+                <li>数据导入</li>
+                <li class="nav-divider"></li>
+                <li><a href="#">来自EXCEL</a></li>
+                <li><a href="#">来自网络</a></li>
+                <li class="nav-divider"></li>
+                <li>数据管理</li>
+                <li class="nav-divider"></li>
+                <li><a href="{{ url_for('show_comments',page=1) }}">评论一览</a></li>
+                <li><a href="{{ url_for('show_downloads',page=1) }}">下载量一览</a></li>
+                <li><a href="{{ url_for('show_stars',page=1) }}">星级一览</a></li>
+                <li><a href="{{ url_for('show_assessments',page=1) }}">评分一览</a></li>
+                <li class="nav-divider"></li>
+                <li>系统操作</li>
+                <li class="nav-divider"></li>
+                <li><a href="#">修改密码</a></li>
+                <li><a href="#">退出登录</a></li>
+                <li class="nav-divider"></li>
+            </ul>
+        </div>
+        <div class="col-lg-10" id="content">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

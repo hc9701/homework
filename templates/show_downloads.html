@@ -1,0 +1,37 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/show_comments.css') }}">
+{% endblock %}
+{% block title %}
+    下载量一览
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="container" id="info">
+        {% if download_list %}
+            <table class="table-hover table-bordered">
+                <caption>下载量一览</caption>
+                <tr>
+                    <th>应用名称</th>
+                    <th>下载量</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+                {% for download in download_list %}
+                    <tr>
+                        <td>{{ download['app_name'] }}</td>
+                        <td>{{ download['value'] }}</td>
+                        <td>{{ download['time'] }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_downloads',id=download['_id'])}}"
+                               onclick="return confirm('确定删除'+'{{ download['app_name'] }}'+'{{ download['time'] }}'+'?')">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

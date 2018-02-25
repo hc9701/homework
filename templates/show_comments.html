@@ -1,0 +1,40 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/show_comments.css') }}">
+{% endblock %}
+{% block title %}
+    用户一览
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="container" id="info">
+        {% if comment_list %}
+            <table class="table-hover table-bordered">
+                <caption>评论一览</caption>
+                <tr>
+                    <th>应用名称</th>
+                    <th>应用商店</th>
+                    <th>评论内容</th>
+                    <th>评论时间</th>
+                    <th>操作</th>
+                </tr>
+                {% for comment in comment_list %}
+                    {% set content = comment['content'] %}
+                    <tr>
+                        <td>{{ comment['app_name'] }}</td>
+                        <td>{{ comment['store_name'] }}</td>
+                        <td>{{ content }}</td>
+                        <td>{{ comment['time'] }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_comments',id=comment['_id']) }}"
+                               onclick="return confirm('确定删除'+'{{ content }}'+'?')">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

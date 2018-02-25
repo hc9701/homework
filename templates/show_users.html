@@ -1,0 +1,44 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/show_users.css') }}">
+{% endblock %}
+{% block title %}
+    用户一览
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container" id="info">
+        {% if user_list %}
+            <table class="table-hover table-bordered">
+                <caption>用户一览</caption>
+                <tr>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>邮箱</th>
+                    <th>身份</th>
+                    <th>操作</th>
+                </tr>
+                {% for user in user_list %}
+                    {% set username = user['username'] %}
+                    <tr>
+                        <td>{{ username }}</td>
+                        <td>{{ user['password'] }}</td>
+                        <td>{{ user['email'] }}</td>
+                        <td>{{ '管理员' if user['is_admin'] else '普通用户' }}</td>
+                        <td>
+                            {% if not user['is_admin'] %}
+                                <a href="{{ url_for('delete_user',username=username) }}"
+                                   onclick="return confirm('确定删除'+'{{ username }}'+'?')">删除</a>
+                                <a href="{{ url_for('modify_user',username=username) }}">修改信息</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

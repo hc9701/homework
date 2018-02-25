@@ -1,0 +1,53 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/add_user.css') }}">
+{% endblock %}
+{% block title %}
+    添加用户
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="container" id="info">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <table>
+                <caption>添加用户</caption>
+                <tr>
+                    <td>{{ form.username.label }}</td>
+                    <td>{{ form.username() }}</td>
+                    <td>{{ form.username.error }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.is_admin.label }}</td>
+                    <td>{{ form.is_admin() }}</td>
+                    <td>{{ form.is_admin.error }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label }}</td>
+                    <td>{{ form.password() }}</td>
+                    <td>{{ form.password.error }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.confirm.label }}</td>
+                    <td>{{ form.confirm() }}</td>
+                    <td>{{ form.confirm.error }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.email.label }}</td>
+                    <td>{{ form.email() }}</td>
+                    <td>{{ form.email.error }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        {{ form.submit() }}
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

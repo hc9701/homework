@@ -11,6 +11,8 @@ from shuju import app, db
 from forms import *
 import numpy
 
+limit = 20
+
 POST = 'POST'
 
 GET = 'GET'
@@ -130,7 +132,7 @@ def detail(app_name, page, count=10):
     word1 = user['word1']
     word2 = user['word2']
     comments = []
-    if app_name=='none':
+    if app_name == 'none':
         app1 = user['app1']
         app2 = user['app2']
         d = db.comments.find({
@@ -205,11 +207,6 @@ def get_score(app_name):
     }
 
 
-'''
-    db.downloads.aggregate([{$match:{app_name:"QQ","time":{"$gt": [ 2017, 12, 31, 0, 0, 0, 2, 123, -1 ]}}},{$group:{_id:{$slice:['$time',0,2]},value:{$sum:"$value"}}}]) 
-'''
-
-
 def get_download(app_name, times):
     last = datetime(year=times.year, month=times.month, day=1)
     first = datetime(year=times.year - 1, month=times.month, day=1)
@@ -252,7 +249,117 @@ def get_download(app_name, times):
         "daily_data": [list(x) for x in zip(*daily_data)],
     }
 
+
+@app.route('/manage/show_users/<int:page>')
+def show_users(page, limit=limit):
+    user_list = []
+    d = db.users.find({}).limit(limit).skip((page - 1) * limit)
+    session['show_users_page'] = page
+    return render_template('show_users.html', user_list=d)
+
+
+@app.route('/manage/delete_user/<username>')
+def delete_user(username):
+    n = db.users.delete_one({'username': username, 'is_admin': 0})
+    if n:
+        flash('删除成功')
+    else:
+        if db.users.find_one({'username': username, 'is_admin': 1}):
+            flash('管理员不能被删除')
+        else:
+            flash('用户名不存在')
+    return redirect(url_for('show_users', page=session['show_user_page']))
+
+
+@app.route('/manage/modify_user/<username>', methods=[GET, POST])
+def modify_user(username):
+    return ''
+
+
+@app.route('/manage/add_user', methods=[GET, POST])
+def add_user():
+    form = AddUserForm()
+    if request.method == POST:
+        if form.validate_on_submit():
+            d = db.users.find_one({
+                'username': form.username.data,
+                'is_admin': form.is_admin.data,
+            })
+            if d:
+                flash('用户名已存在')
+            else:
+                db.users.insert_one({
+                    'username': form.username.data,
+                    'password': form.password.data,
+                    'is_admin': form.is_admin.data,
+                    'email': form.email.data,
+                })
+                flash('添加用户成功')
+    return render_template('add_user.html', form=form)
+
+
+@app.route('/manage/show_comments/<int:page>')
+def show_comments(page=1, limit=limit):
+    d = db.comments.find().limit(limit)
+    session['show_comments_page'] = page
+    return render_template('show_comments.html', comment_list=d)
+
+
+@app.route('/manage/delete_comment/<id>')
+def delete_comments(id):
+    n = db.comments.delete_one({'_id': id})
+    flash('删除成功')
+    return redirect(url_for('show_comments', page=session['show_comments_page']))
+
+
+@app.route('/manage/show_downloads/<int:page>')
+def show_downloads(page, limit=limit):
+    d = db.downloads.find().limit(limit)
+    session['show_downloads_page'] = page
+    return render_template('show_downloads.html', download_list=d)
+
+
+@app.route('/manage/show_downloads/<id>')
+def delete_downloads(id):
+    n = db.downloads.delete_one({'_id': id})
+    flash('删除成功')
+    return redirect(url_for('show_downloads', page=session['show_downloads_page']))
+
+
+@app.route('/manage/show_stars/<int:page>')
+def show_stars(page, limit=limit):
+    d = db.ratings.find({'type': 5}).limit(limit)
+    session['show_stars_page'] = page
+    return render_template('show_stars.html', star_list=d)
+
+
+@app.route('/manage/delete_stars/<id>')
+def delete_stars(id):
+    n = db.ratings.delete_one({'_id': id})
+    flash('删除成功')
+    return redirect(url_for('show_stars', page=session['show_stars_page']))
+
+
+@app.route('/manage/show_assessment/<int:page>')
+def show_assessments(page, limit=limit):
+    d = db.ratings.find({'type': 5}).limit(limit)
+    session['show_assessment_page'] = page
+    return render_template('show_assessment.html', star_list=d)
+
+
+@app.route('/manage/delete_assessment/<id>')
+def delete_assessment(id):
+    n = db.ratings.delete_one({'_id': id})
+    flash('删除成功')
+    return redirect(url_for('show_assessments', page=session['show_assessment_page']))
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return ''
+
+
+@app.route('/main')
+def test():
+    return render_template('base_template/base_admin.html')

@@ -107,3 +107,50 @@ class UserCenterForm(FlaskForm):
     word1 = StringField(label='你想要关注的分词1')
     word2 = StringField(label='你想要关注的分词2')
 
+
+class AddUserForm(FlaskForm):
+    username = StringField(
+        label='用户名',
+        validators=[
+            Length(6, 20, '用户名长度应在6-20位之间'),
+        ],
+        render_kw={
+            "placeholder": "用户名",
+        }
+    )
+    password = PasswordField(
+        label='密码',
+        validators=[
+            Length(6, 20, '密码长度应在6-20位之间'),
+        ],
+        render_kw={
+            "placeholder": "密码",
+        }
+    )
+    confirm = PasswordField(
+        label='密码确认',
+        validators=[
+            EqualTo('password', message='两次密码不一致')
+        ],
+        render_kw={
+            "placeholder": "密码确认"
+        }
+    )
+    email = EmailField(
+        label='邮箱',
+        validators=[
+            Email('请输入合法邮箱'),
+        ],
+        render_kw={
+            "placeholder": "邮箱",
+        }
+    )
+    is_admin = SelectField(
+        label='身份',
+        choices=[(0, '普通用户'), (1, '管理员')],
+        validators=[
+            AnyOf([0, 1], '身份不合法')
+        ],
+        coerce=int,
+    )
+    submit = SubmitField('添加用户')

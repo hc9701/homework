@@ -1,0 +1,41 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/show_stars.css') }}">
+{% endblock %}
+{% block title %}
+    下载量一览
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="container" id="info">
+        {% if star_list %}
+            <table class="table-hover table-bordered">
+                <caption>评分一览</caption>
+                <tr>
+                    <th>应用名称</th>
+                    <th>应用商店</th>
+                    <th>差评</th>
+                    <th>中评</th>
+                    <th>好评</th>
+                    <th>操作</th>
+                </tr>
+                {% for star in star_list %}
+                    <tr>
+                        <td>{{ star['app_name'] }}</td>
+                        <td>{{ star['store_name'] }}</td>
+                        <td>{{ star['ratings'][0] }}</td>
+                        <td>{{ star['ratings'][1] }}</td>
+                        <td>{{ star['ratings'][2] }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_assessment',id=star['_id']) }}"
+                               onclick="return confirm('确定删除'+'{{ star['app_name'] }}'+'{{ star['store_name'] }}'+'?')">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

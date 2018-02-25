@@ -1,0 +1,43 @@
+#title {
+    text-align: center;
+    align-content: center;
+    margin: 0 0;
+    background: #9acfea;
+    border: 1px solid #245580;
+}
+
+#title h1 {
+    color: #002B36;
+}
+
+#title h3 {
+    color: #1b6d85;
+}
+
+#nav {
+    background: #a6e1ec;
+    min-height: 400px;
+    height: auto;
+    border: 1px solid #245580;
+}
+
+#content {
+    background: #c7ddef;
+    border: 1px solid #245580;
+    height: auto;
+}
+
+#main {
+    min-height: 600px;
+    height: auto;
+    background: #ffffff;
+    margin-bottom: 20px;
+    display: -webkit-box;
+}
+
+caption {
+    margin: 30px;
+    text-align: center;
+    color: #002B36;
+    font-size: 24px;
+}
