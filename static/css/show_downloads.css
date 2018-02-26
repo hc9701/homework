@@ -1,0 +1,8 @@
+table{
+    width: 80%;
+}
+td{
+    min-width: 120px;
+    max-width: 180px;
+    width: auto;
+}

@@ -1,0 +1,29 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/load_net_data.css') }}">
+{% endblock %}
+{% block title %}
+    导入网络数据
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container" id="info">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <table>
+                <caption>导入网络数据</caption>
+                <tr>
+                    <td>{{ form.url.label }}</td>
+                    <td>{{ form.url() }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{ form.submit() }}</td>
+                </tr>
+        </form>
+    </div>
+{% endblock %}

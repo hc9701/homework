@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField, SelectField
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import EmailField, URLField
 from wtforms.validators import DataRequired, AnyOf, Length, EqualTo, Email
 
 
@@ -154,3 +154,13 @@ class AddUserForm(FlaskForm):
         coerce=int,
     )
     submit = SubmitField('添加用户')
+
+
+class LoadNetDataForm(FlaskForm):
+    url = URLField(
+        label='URL',
+        render_kw={
+            "size": "50"
+        }
+    )
+    submit = SubmitField('导入')

@@ -5,11 +5,13 @@ import collections
 from datetime import datetime, timedelta
 from flask import render_template, request, redirect, url_for, flash, session, jsonify
 from flask_wtf.csrf import CSRFError
-from pymongo import ASCENDING, DESCENDING
+from pymongo import ASCENDING, DESCENDING, errors
 
 from shuju import app, db
 from forms import *
 import numpy
+
+from spider import SpiderFactory
 
 limit = 20
 
@@ -314,7 +316,7 @@ def delete_comments(id):
 
 @app.route('/manage/show_downloads/<int:page>')
 def show_downloads(page, limit=limit):
-    d = db.downloads.find().limit(limit)
+    d = db.downloads.find().limit(limit).sort('time',DESCENDING)
     session['show_downloads_page'] = page
     return render_template('show_downloads.html', download_list=d)
 
@@ -352,6 +354,23 @@ def delete_assessment(id):
     n = db.ratings.delete_one({'_id': id})
     flash('删除成功')
     return redirect(url_for('show_assessments', page=session['show_assessment_page']))
+
+
+@app.route('/manage/load_net_data', methods=[GET, POST])
+def load_net_data():
+    form = LoadNetDataForm()
+    if request.method == POST:
+        if form.validate_on_submit():
+            try:
+                spider = SpiderFactory.create_spider(form.url.data)
+                spider.parse()
+                spider.store()
+                flash('数据导入成功')
+            except errors.BulkWriteError:
+                flash('数据导入成功')
+            except Exception:
+                flash('找不到对应的数据')
+    return render_template('load_net_data.html', form=form)
 
 
 @app.route('/logout')

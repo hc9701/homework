@@ -96,7 +96,7 @@ class Spider360(SpiderAbstract):
 
 
 class SpiderKuChuan():
-    def __init__(self, url, day=365):
+    def __init__(self, url, day=1):
         package_name = url.split('?')[1].split('&')[0].split('=')[1]
         self.url = url
         self.url_data = 'http://android.kuchuan.com/histortydailydownload?packagename=%s&longType=%d-d' % (
@@ -120,6 +120,17 @@ class SpiderKuChuan():
 
     def store(self):
         db.downloads.insert_many(self.score)
+
+
+class SpiderFactory():
+    @classmethod
+    def create_spider(cls,url):
+        if url.find('a.vmall.com')>-1:
+            return SpiderHuaWei(url)
+        elif url.find('zhushou.360.cn')>-1:
+            return Spider360(url)
+        elif url.find('android.kuchuan.com')>-1:
+            return SpiderKuChuan(url)
 
 
 if __name__ == '__main__':
