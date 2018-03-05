@@ -28,9 +28,12 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'h@rd t0 gu3Ss Str1n9'
 csrf = CSRFProtect(app)
 db = MongoConn().db
-
-
+UPLOAD_FOLDER = '/files/uploads'
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+ALLOWED_EXTENSIONS = {'xlsx'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
 if __name__ == '__main__':
     from views import *
-    app.run(debug=True)
+    app.run(debug=True,port=8080)
