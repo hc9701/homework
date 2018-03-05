@@ -1,0 +1,21 @@
+{% extends 'base_template/base_admin.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/add_user.css') }}">
+{% endblock %}
+{% block title %}
+    上传EXCEL
+{% endblock %}
+{% block body %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="container" id="info">
+        <h3>上传EXCEL</h3>
+        <form enctype="multipart/form-data" method="post" action="{{ url_for('save_excel') }}">
+            {{ form.hidden_tag() }}
+            {{ form.excel() }}
+            {{ form.submit() }}
+        </form>
+    </div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField, SelectField
+from flask_wtf.file import FileAllowed, FileRequired
+from wtforms.fields import StringField, PasswordField, SubmitField, SelectField, FileField
 from wtforms.fields.html5 import EmailField, URLField
 from wtforms.validators import DataRequired, AnyOf, Length, EqualTo, Email
 
@@ -164,3 +165,96 @@ class LoadNetDataForm(FlaskForm):
         }
     )
     submit = SubmitField('导入')
+
+class ModifyDataForm(FlaskForm):
+    username = StringField(
+        label='用户名',
+        validators=[
+            Length(6, 20, '用户名长度应在6-20位之间'),
+        ],
+        render_kw={
+            "placeholder": "用户名",
+            'readonly': True,
+        }
+    )
+    new_password = PasswordField(
+        label='新的密码',
+        validators=[
+            Length(6, 20, '密码长度应在6-20位之间'),
+        ],
+        render_kw={
+            "placeholder": "密码",
+        }
+    )
+    confirm = PasswordField(
+        label='密码确认',
+        validators=[
+            EqualTo('new_password', message='两次密码不一致')
+        ],
+        render_kw={
+            "placeholder": "密码确认"
+        }
+    )
+    email = EmailField(
+        label='邮箱',
+        validators=[
+            Email('请输入合法邮箱'),
+        ],
+        render_kw={
+            "placeholder": "邮箱",
+        }
+    )
+    submit = SubmitField('修改资料')
+
+class ModifyUserForm(FlaskForm):
+    username = StringField(
+        label='用户名',
+        validators=[
+            Length(6, 20, '用户名长度应在6-20位之间'),
+        ],
+        render_kw={
+            "placeholder": "用户名",
+            'readonly': True,
+        }
+    )
+    new_password = PasswordField(
+        label='新的密码',
+        validators=[
+            Length(6, 20, '密码长度应在6-20位之间'),
+        ],
+        render_kw={
+            "placeholder": "密码",
+        }
+    )
+    confirm = PasswordField(
+        label='密码确认',
+        validators=[
+            EqualTo('new_password', message='两次密码不一致')
+        ],
+        render_kw={
+            "placeholder": "密码确认"
+        }
+    )
+    email = EmailField(
+        label='邮箱',
+        validators=[
+            Email('请输入合法邮箱'),
+        ],
+        render_kw={
+            "placeholder": "邮箱",
+        }
+    )
+    submit = SubmitField('修改资料')
+    is_admin = SelectField(
+        '', choices=[(0, '普通用户'), (1, '管理员')],
+        validators=[
+            AnyOf([0, 1], '请选择合法身份')
+        ],
+        coerce=int,
+    )
+
+class UploadForm(FlaskForm):
+    excel = FileField(validators=[
+        FileAllowed(['xls,xlsx'], u'只能上传excel！'),
+        FileRequired(u'文件未选择！')])
+    submit = SubmitField(u'上传')

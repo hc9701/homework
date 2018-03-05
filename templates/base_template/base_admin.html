@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    {% block head %}
-        <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='css/lib/bootstrap.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
-    {% endblock %}
-</head>
-<body>
+{% extends 'base_template/base.html' %}
+{% block head %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/lib/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+{% endblock %}
 {% block body %}
     <script>
         {% for message in get_flashed_messages() %}
@@ -31,7 +27,7 @@
                 <li class="nav-divider"></li>
                 <li>数据导入</li>
                 <li class="nav-divider"></li>
-                <li><a href="#">来自EXCEL</a></li>
+                <li><a href="{{ url_for('load_excel') }}">来自EXCEL</a></li>
                 <li><a href="{{ url_for('load_net_data') }}">来自网络</a></li>
                 <li class="nav-divider"></li>
                 <li>数据管理</li>
@@ -43,8 +39,8 @@
                 <li class="nav-divider"></li>
                 <li>系统操作</li>
                 <li class="nav-divider"></li>
-                <li><a href="#">修改密码</a></li>
-                <li><a href="#">退出登录</a></li>
+                <li><a href="{{ url_for('modify_data') }}">修改密码</a></li>
+                <li><a href="{{ url_for('logout') }}" onclick="return confirm('确定退出')">退出登录</a></li>
                 <li class="nav-divider"></li>
             </ul>
         </div>
@@ -55,5 +51,3 @@
         </div>
     </div>
 {% endblock %}
-</body>
-</html>

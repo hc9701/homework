@@ -40,8 +40,7 @@ def login():
                 del d['_id']
                 session['user'] = d
                 if d['is_admin']:
-                    # todo
-                    pass
+                    return redirect(url_for('main'))
                 else:
                     return redirect(url_for('home'))
             else:
@@ -60,6 +59,10 @@ def register():
                 'username': form.username.data,
                 'password': form.password.data,
                 'is_admin': 0,
+                'word1': '',
+                'word2': '',
+                'app1': '',
+                'app2': ''
             }
             d = db.users.find_one(user_info)
             if not d:
@@ -188,11 +191,6 @@ def csrf_error(reason):
     return 'emmm'
 
 
-@app.before_request
-def verify():
-    print(request.url)
-
-
 def get_score(app_name):
     d = db.ratings.aggregate(
         [{'$match': {'app_name': app_name, 'type': 5}}]
@@ -275,7 +273,39 @@ def delete_user(username):
 
 @app.route('/manage/modify_user/<username>', methods=[GET, POST])
 def modify_user(username):
-    return ''
+    form = ModifyUserForm
+    if request.method == POST:
+        if form.validate_on_submit():
+            if request.method == POST:
+                if form.validate_on_submit():
+                    if form.username.data != username:
+                        flash('不能修改用户名')
+                    else:
+                        password = form.new_password.data
+                        user = {
+                            'username': username,
+                            'password': form.new_password.data,
+                            'confirm': form.confirm.data,
+                            'email': form.email.data,
+                        }
+                        db.users.update_one({
+                            'username': user['username'],
+                            'is_admin': form.is_admin.data,
+                        },
+                            {'$set': user}
+                        )
+                        flash('更新成功')
+                        return redirect(url_for('show_users', page=session['show_users_page']))
+                else:
+                    flash('\\n'.join(chain.from_iterable(form.errors.values())))
+    else:
+        user = db.users.find_one({
+            'username': username,
+            'is_admin': 0
+        })
+        form.username.data = user['username']
+        form.email.data = user['email']
+    return render_template('modify_user.html', form=form)
 
 
 @app.route('/manage/add_user', methods=[GET, POST])
@@ -295,8 +325,14 @@ def add_user():
                     'password': form.password.data,
                     'is_admin': form.is_admin.data,
                     'email': form.email.data,
+                    'word1': '',
+                    'word2': '',
+                    'app1': '',
+                    'app2': ''
                 })
                 flash('添加用户成功')
+        else:
+            flash('\\n'.join(chain.from_iterable(form.errors.values())))
     return render_template('add_user.html', form=form)
 
 
@@ -316,7 +352,7 @@ def delete_comments(id):
 
 @app.route('/manage/show_downloads/<int:page>')
 def show_downloads(page, limit=limit):
-    d = db.downloads.find().limit(limit).sort('time',DESCENDING)
+    d = db.downloads.find().limit(limit).sort('time', DESCENDING)
     session['show_downloads_page'] = page
     return render_template('show_downloads.html', download_list=d)
 
@@ -370,15 +406,71 @@ def load_net_data():
                 flash('数据导入成功')
             except Exception:
                 flash('找不到对应的数据')
+        else:
+            flash('\\n'.join(chain.from_iterable(form.errors.values())))
     return render_template('load_net_data.html', form=form)
+
+
+@app.route('/manage/modify_data', methods=[GET, POST])
+def modify_data():
+    form = ModifyDataForm()
+    if request.method == POST:
+        if form.validate_on_submit():
+            if request.method == POST:
+                user = session['user']
+                if form.validate_on_submit():
+                    if form.username.data != user['username']:
+                        flash('不能修改用户名')
+                    else:
+                        password = form.new_password.data
+                        if user['password'] != password and password != '':
+                            user['password'] = password
+                        db.users.update_one({
+                            'username': user['username'],
+                            'is_admin': 1
+                        },
+                            {'$set': user}
+                        )
+                        flash('更新成功')
+    else:
+        user = session.get('user')
+        form.username.data = user['username']
+        form.email.data = user.get('email')
+    return render_template('modify_data.html', form=form)
 
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return ''
+    return redirect(url_for('login'))
 
 
-@app.route('/main')
-def test():
+@app.route('/manage/main')
+def main():
     return render_template('base_template/base_admin.html')
+
+
+@app.before_request
+def verify():
+    user = session.get('user')
+    if request.url.find('/user/') > -1:
+        if not user:
+            flash('请先登录')
+            return redirect(url_for('login'))
+    elif request.url.find('/manage/') > -1:
+        if not user or not user['is_admin']:
+            flash('请先登录')
+            return redirect(url_for('login'))
+    print(request.url)
+
+
+@app.route('/manage/load_excel')
+def load_excel():
+    form = UploadForm()
+    return render_template('load_excel.html', form=form)
+
+
+@app.route('/manage/save_excel',methods=[POST])
+def save_excel():
+    f = request.files['file']
+    return redirect(url_for('load_excel'))
