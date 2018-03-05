@@ -166,6 +166,7 @@ class LoadNetDataForm(FlaskForm):
     )
     submit = SubmitField('导入')
 
+
 class ModifyDataForm(FlaskForm):
     username = StringField(
         label='用户名',
@@ -205,6 +206,7 @@ class ModifyDataForm(FlaskForm):
         }
     )
     submit = SubmitField('修改资料')
+
 
 class ModifyUserForm(FlaskForm):
     username = StringField(
@@ -253,8 +255,9 @@ class ModifyUserForm(FlaskForm):
         coerce=int,
     )
 
+
 class UploadForm(FlaskForm):
     excel = FileField(validators=[
-        FileAllowed(['xls,xlsx'], u'只能上传excel！'),
-        FileRequired(u'文件未选择！')])
+        FileAllowed(['xls','xlsx'], '只能上传excel！'),
+        FileRequired('文件未选择！')])
     submit = SubmitField(u'上传')

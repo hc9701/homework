@@ -160,8 +160,10 @@ def detail(app_name, page, count=10):
     if d:
         for i in d:
             comments.append(i)
-            i['content'] = i['content'].replace(word1, '<mark>%s</mark>' % word1)
-            i['content'] = i['content'].replace(word2, '<mark>%s</mark>' % word2)
+            if word1 and word1.strip():
+                i['content'] = i['content'].replace(word1, '<mark>%s</mark>' % word1)
+            if word2 and word2.strip():
+                i['content'] = i['content'].replace(word2, '<mark>%s</mark>' % word2)
     return render_template('Details.html', comments=comments)
 
 
@@ -464,13 +466,14 @@ def verify():
     print(request.url)
 
 
-@app.route('/manage/load_excel')
+@app.route('/manage/load_excel', methods=[GET, POST])
 def load_excel():
     form = UploadForm()
+    if request.method == POST:
+        print(1)
+        if form.validate_on_submit():
+            f = form.excel.data
+        else:
+            flash('\\n'.join(chain.from_iterable(form.errors.values())))
     return render_template('load_excel.html', form=form)
 
-
-@app.route('/manage/save_excel',methods=[POST])
-def save_excel():
-    f = request.files['file']
-    return redirect(url_for('load_excel'))

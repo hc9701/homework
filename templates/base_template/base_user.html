@@ -14,23 +14,9 @@
             <li><a href="{{ url_for('detail',app_name='none',page=1) }}">APP评论详情</a></li>
             <li><a href="{{ url_for('score') }}">APP评分统计</a></li>
             <li><a href="{{ url_for('user_center') }}">用户中心</a></li>
-            <li><a onclick="logout()"> 退出登录</a></li>
+            <li><a onclick="return confirm('退出登录') " href="{{ url_for('logout') }}"> 退出登录</a></li>
         </ul>
         {% block content %}
-            <script>
-                function logout() {
-                    b = confirm('退出登录');
-                    if (b) {
-                        $.ajax({
-                            url: '{{ url_for('logout') }}',
-                            success: function (data) {
-                                location.href = '/login'
-                            }
-                        })
-                    }
-                }
-
-            </script>
         {% endblock %}
     </div>
     <script>

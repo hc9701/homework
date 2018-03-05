@@ -135,11 +135,11 @@ class SpiderFactory():
 
 if __name__ == '__main__':
     # spider = SpiderHuaWei('http://a.vmall.com/uowap/index.html#/detailApp/C9319')
-    # spider = SpiderHuaWei('http://a.vmall.com/uowap/index.html#/detailApp/C10111119')
+    spider = SpiderHuaWei('http://a.vmall.com/uowap/index.html#/detailApp/C10111119')
     # spider = Spider360('http://zhushou.360.cn/detail/index/soft_id/7953?recrefer=SE_D_qq')
     # spider = Spider360('http://zhushou.360.cn/detail/index/soft_id/902591')
-    spider = SpiderKuChuan(
-        'http://android.kuchuan.com/page/detail/download?package=com.tencent.mobileqq&infomarketid=1&site=0#!/day/com.tencent.mobileqq')
+    # spider = SpiderKuChuan(
+    #     'http://android.kuchuan.com/page/detail/download?package=com.tencent.mobileqq&infomarketid=1&site=0#!/day/com.tencent.mobileqq')
     # spider = SpiderKuChuan(
     #     'http://android.kuchuan.com/page/detail/download?package=com.tencent.qqlite&infomarketid=1&site=0#!/day/com.tencent.qqlite')
     spider.parse()
