@@ -1,4 +1,5 @@
-import json
+import os
+import xlrd
 from itertools import chain
 import collections
 
@@ -6,7 +7,7 @@ from datetime import datetime, timedelta
 from flask import render_template, request, redirect, url_for, flash, session, jsonify
 from flask_wtf.csrf import CSRFError
 from pymongo import ASCENDING, DESCENDING, errors
-
+from utils import ExcelUtils
 from shuju import app, db
 from forms import *
 import numpy
@@ -69,6 +70,7 @@ def register():
                 user_info['email'] = form.email.data
                 db.users.insert(user_info)
                 flash('注册成功')
+                session['user'] = user_info
                 return redirect(url_for('user_center'))
             else:
                 flash('用户名已存在')
@@ -470,10 +472,21 @@ def verify():
 def load_excel():
     form = UploadForm()
     if request.method == POST:
-        print(1)
         if form.validate_on_submit():
             f = form.excel.data
+            path = os.path.join(
+                app.config['UPLOAD_FOLDER'],
+                f.filename
+            )
+            f.save(path)
+            read_excel(path)
+            flash('成功')
         else:
             flash('\\n'.join(chain.from_iterable(form.errors.values())))
     return render_template('load_excel.html', form=form)
 
+
+def read_excel(path, sheet_name='评论'):
+    excel = ExcelUtils(path)
+    excel.read_comments(sheet_name)
+    excel.store_comments()
