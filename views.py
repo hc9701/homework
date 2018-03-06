@@ -480,7 +480,7 @@ def load_excel():
             )
             f.save(path)
             read_excel(path)
-            flash('成功')
+            flash('导入成功')
         else:
             flash('\\n'.join(chain.from_iterable(form.errors.values())))
     return render_template('load_excel.html', form=form)
